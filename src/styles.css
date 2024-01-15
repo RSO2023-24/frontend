@@ -1,0 +1,15 @@
+/* Global */
+
+.container {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+body {
+    background-image: url("src/assets/HIke.jpeg");
+    width: fit-content;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

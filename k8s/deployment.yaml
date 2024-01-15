@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: frontend-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: frontend
+    template:
+        metadata:
+            labels:
+                app: frontend
+        spec:
+            containers:
+                - image: tomssojer/frontend:latest
+                  name: frontend
+                  ports:
+                      - containerPort: 80
+                        name: server
+                        protocol: TCP
+                  resources:
+                    limits:
+                      cpu: "1"
+                      memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: frontend
+spec:
+    type: LoadBalancer
+    ports:
+        - port: 80
+          protocol: TCP
+          targetPort: server
+    selector:
+        app: frontend

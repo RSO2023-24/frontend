@@ -1,0 +1,96 @@
+<div class="wrapper">
+    <div class="left">
+        <form (ngSubmit)="onSubmit()" class="form-horizontal">
+            <div class="form-group">
+                <label for="difficulty" class="col-sm-2 control-label"><b>Difficulty:</b></label>
+                <div class="col-sm-10">
+                    <!-- Use radio buttons for difficulty -->
+                    <div class="radio">
+                        <label><input type="radio" name="difficulty" value="1" [(ngModel)]="difficulty"> Easy</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="difficulty" value="2" [(ngModel)]="difficulty"> Medium</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="difficulty" value="3" [(ngModel)]="difficulty"> Hard</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="difficulty" value="4" [(ngModel)]="difficulty"> Extreme</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pointOfInterest" class="col-sm-2 control-label"><b>Locations:</b></label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="pointOfInterest" name="pointOfInterest" (ngModelChange)="onSelect($event)" [(ngModel)]="selectedLocationId">
+                        <option value="" disabled selected>Select</option>
+                        <option *ngFor="let location of locations" [value]="location.id">{{ location.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="latitude" class="col-sm-2 control-label"><b>Latitude:</b></label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="latitude" name="latitude" [(ngModel)]="latitude">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="longitude" class="col-sm-2 control-label"><b>Longitude:</b></label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="longitude" name="longitude" [(ngModel)]="longitude">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="maxDistance" class="col-sm-2 control-label"><b>Distance:</b></label>
+                <div class="col-sm-10">
+                    <!-- Use a slider for maxDistance -->
+                    <input type="range" class="form-control" id="maxDistance" name="maxDistance" min="1" max="100" [(ngModel)]="maxDistance">
+                    <span>{{ maxDistance }} km</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <!-- Use a row for the buttons -->
+                    <div class="row">
+                        <!-- Use a column for each button -->
+                        <div class="col-sm-6">
+                            <input type="submit" class="btn btn-primary" value="Search" style="width: 100%">
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="button" class="btn btn-secondary" style="margin-left: 0" (click)="getLocation()">
+                                <fa-icon [icon]="faMapMarker"></fa-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="right" *ngIf="trails.length != 0">
+        <!-- Use a card component for each trail -->
+        <div *ngFor="let trail of trails" class="card mb-3">
+            <!-- Use a card header for the trail name -->
+            <div class="card-header bg-primary text-white">
+                {{ trail.name }}
+            </div>
+            <!-- Use a card body for the trail details -->
+            <div class="card-body">
+                <!-- Use a list group for the trail attributes -->
+                <ul class="list-group list-group-flush" style="padding-bottom: 10px">
+                    <li class="list-group-item"><b>Difficulty:</b> {{ getDifficultyLabel(trail.difficulty) }}</li>
+                    <li class="list-group-item"><b>Trail distance:</b> {{ trail.length }} m</li>
+                    <li class="list-group-item"><b>Duration:</b> {{ trail.duration }} min</li>
+                    <li class="list-group-item" *ngIf="trail.temperature"><b>Temperature:</b> {{ trail.temperature }} °C</li>
+                    <li class="list-group-item" *ngIf="trail.humidity"><b>Humidity:</b> {{ trail.humidity }} %</li>
+                    <li class="list-group-item" *ngIf="trail.cloudCoverage"><b>Cloud Coverage:</b> {{ trail.cloudCoverage }} %</li>
+                </ul>
+                <!-- Use a button to open a modal for the weather -->
+                <button type="button" class="btn btn-secondary" (click)="getWeather(trail)">
+                    <fa-icon [icon]="faCloud"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

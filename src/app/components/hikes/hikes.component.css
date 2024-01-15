@@ -1,0 +1,29 @@
+.wrapper {
+    margin-top: 150px;
+    display: flex;
+    height: 80vh;
+    justify-content: center;
+    width: 100vw;
+    gap: 15px;
+}
+
+.left {
+    background-color: lightblue;
+    border-radius: 15px;
+    padding: 15px;
+    height: fit-content;
+    width: fit-content;
+
+}
+
+.right {
+    background-color: lightblue;
+    border-radius: 15px;
+    padding: 15px;
+    width: 40%;
+    overflow-y: scroll;
+}
+
+
+
+
